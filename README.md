@@ -22,4 +22,4 @@ Type on command prompt/terminal:
  
 If any changes are made to the server stack. Then run the following command:
  
- `./create.sh serverstack serverIAC.yml demoservers.json`
+ `./update.sh serverstack serverIAC.yml demoservers.json`
