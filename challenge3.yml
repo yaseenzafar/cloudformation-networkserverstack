@@ -6,7 +6,7 @@ Parameters:
   EnvironmentName:
       Description: An environment name that will be prefixed to resource names
       Type: String
-      
+
   AMItoUse:
       Description: AMI to use for our base image
       Type: String
@@ -52,7 +52,7 @@ Resources:
           CidrIp: 0.0.0.0/0
 # Server EC2 Instance
   ServerInstance: 
-    Type: AWS::EC2::Instance
+    Type: "AWS::EC2::Instance"
     Properties:
       InstanceType: t3.micro
       ImageId: !Ref AMItoUse
