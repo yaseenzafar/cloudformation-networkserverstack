@@ -1,12 +1,14 @@
+#
 # Exercise 3 Solution
 # Carlos Rivas / February 2021
 #
 Parameters:
-
-  EnvironmentName:
-      Description: An environment name that will be prefixed to resource names
-      Type: String
-
+  myVPC:
+      Description: VPC used to deploy our resources below
+      Type: AWS::EC2::VPC::Id
+  SubnetForServer:
+      Description: Subnet to be used for our Web Server
+      Type: AWS::EC2::Subnet::Id
   AMItoUse:
       Description: AMI to use for our base image
       Type: String
@@ -38,8 +40,7 @@ Resources:
     Properties:
         GroupDescription: Allow http to our test host
         VpcId:
-          Fn::ImportValue:
-            !Sub "${EnvironmentName}-VPCID"
+          Ref: myVPC
         SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: 80
@@ -52,7 +53,7 @@ Resources:
           CidrIp: 0.0.0.0/0
 # Server EC2 Instance
   ServerInstance: 
-    Type: "AWS::EC2::Instance"
+    Type: AWS::EC2::Instance
     Properties:
       InstanceType: t3.micro
       ImageId: !Ref AMItoUse
@@ -63,5 +64,4 @@ Resources:
           GroupSet: 
             - Ref: "WebAccessSecurityGroup"
           SubnetId: 
-            - Fn::ImportValue: 
-                !Sub "${EnvironmentName}-PRIV-NETS"
+            Ref: "SubnetForServer"
